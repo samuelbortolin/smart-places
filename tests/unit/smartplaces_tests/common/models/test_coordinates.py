@@ -8,5 +8,5 @@ from smartplaces.common.models.coordinates import Coordinates
 class TestCoordinates(TestCase):
 
     def test_repr(self):
-        coordinates = Coordinates(0.0, 0.0)
+        coordinates = Coordinates(46.0748, 11.1217)
         self.assertEqual(coordinates, Coordinates.from_repr(coordinates.to_repr()))

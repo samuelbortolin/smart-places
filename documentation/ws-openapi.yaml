@@ -1,0 +1,472 @@
+openapi: "3.0.2"
+
+info:
+  title: Smart-Places
+  description: This sections collects the use cases that are supported by the Smart-Places API.
+  version: "0.1.0"
+
+paths:
+
+  /place:
+    post:
+      tags:
+        - "Place"
+      summary: Create Place
+      description: Create a new place.
+      requestBody:
+        description: The representation of a place
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Place"
+      responses:
+        '201':
+          description: Place created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+        '400':
+          description: Malformed request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    get:
+      tags:
+        - "Place"
+      summary: Get Place
+      description: Get the place with place_id equal to the one requested.
+      parameters:
+        - in: query
+          name: place_id
+          description: The id of the place
+          schema:
+            type: string
+          required: true
+          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Place"
+        '400':
+          description: Missing required parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '404':
+          description: Place not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Place Not Found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    put:
+      tags:
+        - "Place"
+      summary: Update Place
+      description: Update a place.
+      requestBody:
+        description: The representation of a place
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Place"
+      responses:
+        '200':
+          description: Place updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Malformed request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    delete:
+      tags:
+        - "Place"
+      summary: Delete Place
+      description: Delete the place with place_id equal to the one requested.
+      parameters:
+        - in: query
+          name: place_id
+          description: The id of the place
+          schema:
+            type: string
+          required: true
+          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+      responses:
+        '200':
+          description: Place deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Missing required parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+  /sensor:
+    post:
+      tags:
+        - "Sensor"
+      summary: Create Sensor
+      description: Create a new sensor.
+      requestBody:
+        description: The representation of a sensor
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sensor"
+      responses:
+        '201':
+          description: Sensor created.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 02:00:00:00:00:01
+        '400':
+          description: Malformed request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    get:
+      tags:
+        - "Sensor"
+      summary: Get Sensor
+      description: Get the sensor with sensor_id equal to the one requested.
+      parameters:
+        - in: query
+          name: sensor_id
+          description: The id of the sensor
+          schema:
+            type: string
+          required: true
+          example: 02:00:00:00:00:01
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Sensor"
+        '400':
+          description: Missing required parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '404':
+          description: Sensor not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Sensor Not Found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    put:
+      tags:
+        - "Sensor"
+      summary: Update Sensor
+      description: Update a sensor.
+      requestBody:
+        description: The representation of a sensor
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Sensor"
+      responses:
+        '200':
+          description: Sensor updated.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Malformed request.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+    delete:
+      tags:
+        - "Sensor"
+      summary: Delete Sensor
+      description: Delete the sensor with sensor_id equal to the one requested.
+      parameters:
+        - in: query
+          name: sensor_id
+          description: The id of the sensor
+          schema:
+            type: string
+          required: true
+          example: 02:00:00:00:00:01
+      responses:
+        '200':
+          description: Sensor deleted.
+          content:
+            application/json:
+              schema:
+                type: object
+        '400':
+          description: Missing required parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+  /place/sensor:
+    get:
+      tags:
+        - "Place/Sensor"
+      summary: Get Sensors In Place
+      description: Get the sensors present in the place with place_id equal to the one requested.
+      parameters:
+        - in: query
+          name: place_id
+          description: The id of the place
+          schema:
+            type: string
+          required: true
+          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+      responses:
+        '200':
+          description: The request has succeeded.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "#/components/schemas/Sensor"
+        '400':
+          description: Missing required parameter.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Malformed Request
+        '404':
+          description: Place not found.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Place Not Found
+        '500':
+          description: Internal server error.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal Server Error
+
+components:
+
+  schemas:
+    Coordinates:
+      type: object
+      description: The model of the coordinates of a place
+      properties:
+        lat:
+          type: string
+          description: The latitude of the place
+          example: 46.0748
+        lon:
+          type: string
+          description: The longitude of the place
+          example: 11.1217
+
+    Place:
+      type: object
+      description: The model of a place of interest
+      properties:
+        id:
+          type: string
+          description: The id of the place of interest
+          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+        type:
+          type: string
+          description: The type of place
+          example: temperature
+        name:
+          type: string
+          description: The name of the place of interest
+          example: Trento
+        coordinates:
+          type: object
+          description: The coordinates of the place of interest
+          allOf:
+            - $ref: "#/components/schemas/Coordinates"
+
+    Sensor:
+      type: object
+      description: The model of a sensor that collects a certain type of data and is in one place
+      properties:
+        id:
+          type: string
+          description: The id of the sensor
+          example: 02:00:00:00:00:01
+        type:
+          type: string
+          description: The type of data that the sensor collects
+          example: temperature
+        place_id:
+          type: string
+          description: The id of the place where is the sensor
+          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8

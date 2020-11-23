@@ -13,7 +13,8 @@ class ResourcesBuilder:
     def routes():
         return [
             (PlaceResource, '/place', ()),
-            (SensorResource, '/sensor', ())
+            (SensorResource, '/sensor', ()),
+            (SensorsInPlaceResource, '/place/sensor', ())
         ]
 
 
@@ -26,45 +27,41 @@ class PlaceResource(Resource):
 
     def get(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
-
         if not place_id:
             return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
 
-        # return the place with the place_id equal to the requested one
+        # return the place with the place_id equal to the one requested or 404 place not found
 
     def post(self):
         posted_data = request.get_json()
-
         if posted_data is None:
-            return {"message": "Data is missing"}, 400
+            return {"message": "Malformed request: data is missing"}, 400
 
         try:
             place: Place = Place.from_repr(posted_data)
         except KeyError:
-            return {"message": "Could not parse posted data: malformed request"}, 400
+            return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # save the place
+        # create a new place
 
     def put(self):
         posted_data = request.get_json()
-
         if posted_data is None:
-            return {"message": "Data is missing"}, 400
+            return {"message": "Malformed request: data is missing"}, 400
 
         try:
             place: Place = Place.from_repr(posted_data)
         except KeyError:
-            return {"message": "Could not parse posted data: malformed request"}, 400
+            return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # does it make sense to update a place?
+        # update a place
 
     def delete(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
-
         if not place_id:
             return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
 
-        # delete the place with the place_id equal to the requested one
+        # delete the place with the place_id equal to the one requested
 
 
 class SensorResource(Resource):
@@ -73,54 +70,56 @@ class SensorResource(Resource):
     """
 
     SENSOR_ID_KEY = "sensor_id"
-    PLACE_ID_KEY = "place_id"
 
     def get(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
-
         if not sensor_id:
             return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
 
-        # return the sensor with the sensor_id equal to the requested one
+        # return the sensor with the sensor_id equal to the one requested or 404 sensor not found
 
     def post(self):
-        place_id: str = request.args.get(self.PLACE_ID_KEY)
         posted_data = request.get_json()
-
-        if not place_id:
-            return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
-
         if posted_data is None:
-            return {"message": "Data is missing"}, 400
+            return {"message": "Malformed request: data is missing"}, 400
 
         try:
             sensor: Sensor = Sensor.from_repr(posted_data)
         except KeyError:
-            return {"message": "Could not parse posted data: malformed request"}, 400
+            return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # save the sensor associating it to the place with the requested place_id
+        # create a new sensor
 
     def put(self):
-        place_id: str = request.args.get(self.PLACE_ID_KEY)
         posted_data = request.get_json()
-
-        if not place_id:
-            return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
-
         if posted_data is None:
-            return {"message": "Data is missing"}, 400
+            return {"message": "Malformed request: data is missing"}, 400
 
         try:
             sensor: Sensor = Sensor.from_repr(posted_data)
         except KeyError:
-            return {"message": "Could not parse posted data: malformed request"}, 400
+            return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # update the location of the place with the requested place_id
+        # update a sensor
 
     def delete(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
-
         if not sensor_id:
             return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
 
-        # delete the sensor with the sensor_id equal to the requested one
+        # delete the sensor with the sensor_id equal to the one requested
+
+
+class SensorsInPlaceResource(Resource):
+    """
+    The Resource for the getting the sensors present in a place
+    """
+
+    PLACE_ID_KEY = "place_id"
+
+    def get(self):
+        place_id: str = request.args.get(self.PLACE_ID_KEY)
+        if not place_id:
+            return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
+
+        # return the sensors in the place with the place_id equal to the one requested or 404 place not found

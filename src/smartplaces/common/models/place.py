@@ -1,5 +1,7 @@
 from __future__ import absolute_import, annotations
 
+import uuid
+
 from smartplaces.common.models.coordinates import Coordinates
 
 
@@ -14,20 +16,22 @@ class Place:
     COORDINATES_KEY = "coordinates"
 
     def __init__(self, place_id: str, place_type: str, place_name: str, place_coordinates: Coordinates) -> None:
+        """
+        :param place_id: The id of the place of interest
+        :param place_type: The type of place
+        :param place_name: The name of the place of interest
+        :param place_coordinates: The coordinates of the place of interest
+        """
+
         self.place_id: str = place_id
         self.place_type: str = place_type
         self.place_name: str = place_name
         self.place_coordinates: Coordinates = place_coordinates
 
-    # each sensor associated to a place or a place with a list of sensors or both
-
-    def update(self, o: Place) -> None:
-        self.place_id = o.place_id
+    def update(self, o: Place) -> Place:
         self.place_type = o.place_type
         self.place_name = o.place_name
-        self.place_coordinates = o.place_coordinates
-
-    # does it make sense to update a place?
+        return self
 
     def to_repr(self) -> dict:
         return {
@@ -39,8 +43,11 @@ class Place:
 
     @staticmethod
     def from_repr(raw_place: dict) -> Place:
-        return Place(raw_place[Place.ID_KEY], raw_place[Place.TYPE_KEY], raw_place[Place.NAME_KEY],
-                     Coordinates.from_repr(raw_place[Place.COORDINATES_KEY]))
+        return Place(
+            raw_place[Place.ID_KEY] if Place.ID_KEY in raw_place else str(uuid.uuid4()),
+            raw_place[Place.TYPE_KEY], raw_place[Place.NAME_KEY],
+            Coordinates.from_repr(raw_place[Place.COORDINATES_KEY])
+        )
 
     def __eq__(self, o: Place) -> bool:
         return self.place_id == o.place_id and self.place_type == o.place_type and self.place_name == o.place_name \

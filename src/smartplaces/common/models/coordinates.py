@@ -12,6 +12,11 @@ class Coordinates:
     LON_KEY = "lon"
 
     def __init__(self, lat: float, lon: float) -> None:
+        """
+        :param lat: The latitude of the place
+        :param lon: The longitude of the place
+        """
+
         self.lat: float = lat
         self.lon: float = lon
 

@@ -9,5 +9,20 @@ from smartplaces.common.models.place import Place
 class TestPlace(TestCase):
 
     def test_repr(self):
-        place = Place("place_id", "place_type", "place_name", Coordinates(0.0, 0.0))
+        place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
         self.assertEqual(place, Place.from_repr(place.to_repr()))
+
+        raw_place = {
+            Place.TYPE_KEY: "type",
+            Place.NAME_KEY: "name",
+            Place.COORDINATES_KEY: {
+                Coordinates.LAT_KEY: 46.0748,
+                Coordinates.LON_KEY: 11.1217
+            }
+        }
+        self.assertIsInstance(Place.from_repr(raw_place), Place)
+
+    def test_update(self):
+        place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
+        place_updated = Place("id", "type2", "name2", Coordinates(46.0748, 11.1217))
+        self.assertEqual(place_updated, place.update(place_updated))
