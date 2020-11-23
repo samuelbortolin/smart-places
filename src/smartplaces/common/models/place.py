@@ -19,11 +19,15 @@ class Place:
         self.place_name: str = place_name
         self.place_coordinates: Coordinates = place_coordinates
 
+    # each sensor associated to a place or a place with a list of sensors or both
+
     def update(self, o: Place) -> None:
         self.place_id = o.place_id
         self.place_type = o.place_type
         self.place_name = o.place_name
         self.place_coordinates = o.place_coordinates
+
+    # does it make sense to update a place?
 
     def to_repr(self) -> dict:
         return {
@@ -36,7 +40,7 @@ class Place:
     @staticmethod
     def from_repr(raw_place: dict) -> Place:
         return Place(raw_place[Place.ID_KEY], raw_place[Place.TYPE_KEY], raw_place[Place.NAME_KEY],
-                     raw_place[Place.COORDINATES_KEY].from_repr())
+                     Coordinates.from_repr(raw_place[Place.COORDINATES_KEY]))
 
     def __eq__(self, o: Place) -> bool:
         return self.place_id == o.place_id and self.place_type == o.place_type and self.place_name == o.place_name \
