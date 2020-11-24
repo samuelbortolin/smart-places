@@ -2,7 +2,7 @@ from __future__ import absolute_import, annotations
 
 from unittest import TestCase
 
-from smartplaces.common.models.coordinates import Coordinates
+from smartplaces.models.coordinates import Coordinates
 
 
 class TestCoordinates(TestCase):

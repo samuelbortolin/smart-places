@@ -1,11 +1,13 @@
 from __future__ import absolute_import, annotations
 
 import uuid
+from typing import Optional, Any
 
-from smartplaces.common.models.coordinates import Coordinates
+from smartplaces.models.base_object import BaseObject
+from smartplaces.models.coordinates import Coordinates
 
 
-class Place:
+class Place(BaseObject):
     """
     The model of a place of interest
     """
@@ -32,6 +34,20 @@ class Place:
         self.place_type = o.place_type
         self.place_name = o.place_name
         return self
+
+    def get_id(self) -> str:
+        return self.place_id
+
+    def get_field(self, field_key: str) -> Optional[Any]:
+        if field_key == self.ID_KEY:
+            return self.get_id()
+        if field_key == self.TYPE_KEY:
+            return self.place_type
+        if field_key == self.NAME_KEY:
+            return self.place_name
+        if field_key == self.COORDINATES_KEY:
+            return self.place_coordinates
+        return None
 
     def to_repr(self) -> dict:
         return {

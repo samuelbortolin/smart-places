@@ -1,9 +1,12 @@
 from __future__ import absolute_import, annotations
 
 import uuid
+from typing import Optional, Any
+
+from smartplaces.models.base_object import BaseObject
 
 
-class Sensor:
+class Sensor(BaseObject):
     """
     The model of a sensor that collects a certain type of data and is in one place
     """
@@ -26,6 +29,18 @@ class Sensor:
     def update(self, o: Sensor) -> Sensor:
         self.place_id = o.place_id
         return self
+
+    def get_id(self) -> str:
+        return self.sensor_id
+
+    def get_field(self, field_key: str) -> Optional[Any]:
+        if field_key == self.ID_KEY:
+            return self.get_id()
+        if field_key == self.TYPE_KEY:
+            return self.sensor_type
+        if field_key == self.PLACE_ID_KEY:
+            return self.place_id
+        return None
 
     def to_repr(self) -> dict:
         return {

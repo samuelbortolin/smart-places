@@ -1,9 +1,9 @@
 from __future__ import absolute_import, annotations
 
-from unittest import TestCase
+from tests.unit.smartplaces_tests.common.common_test_ws import CommonWsTestCase
 
 
-class TestPlaceResource(TestCase):
+class TestPlaceResource(CommonWsTestCase):
 
     def test_get_place(self):
         pass

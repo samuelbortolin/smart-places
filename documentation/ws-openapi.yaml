@@ -6,7 +6,6 @@ info:
   version: "0.1.0"
 
 paths:
-
   /place:
     post:
       tags:
@@ -14,7 +13,7 @@ paths:
       summary: Create Place
       description: Create a new place.
       requestBody:
-        description: The representation of a place
+        description: The representation of a place (the id of the place is optional and if not passed, one will be generated)
         required: true
         content:
           application/json:
@@ -30,7 +29,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+                    example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"
         '400':
           description: Malformed request.
           content:
@@ -40,7 +39,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -50,7 +49,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     get:
       tags:
@@ -64,7 +63,7 @@ paths:
           schema:
             type: string
           required: true
-          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+          example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"
       responses:
         '200':
           description: The request has succeeded.
@@ -81,7 +80,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '404':
           description: Place not found.
           content:
@@ -91,7 +90,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Place Not Found
+                    example: "Place Not Found"
         '500':
           description: Internal server error.
           content:
@@ -101,7 +100,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     put:
       tags:
@@ -131,7 +130,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -141,7 +140,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     delete:
       tags:
@@ -155,7 +154,7 @@ paths:
           schema:
             type: string
           required: true
-          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+          example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"
       responses:
         '200':
           description: Place deleted.
@@ -172,7 +171,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -182,7 +181,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
   /sensor:
     post:
@@ -191,7 +190,7 @@ paths:
       summary: Create Sensor
       description: Create a new sensor.
       requestBody:
-        description: The representation of a sensor
+        description: The representation of a sensor (the id of the sensor is optional and if not passed, one will be generated)
         required: true
         content:
           application/json:
@@ -207,7 +206,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    example: 02:00:00:00:00:01
+                    example: "02:00:00:00:00:01"
         '400':
           description: Malformed request.
           content:
@@ -217,7 +216,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -227,7 +226,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     get:
       tags:
@@ -241,7 +240,7 @@ paths:
           schema:
             type: string
           required: true
-          example: 02:00:00:00:00:01
+          example: "02:00:00:00:00:01"
       responses:
         '200':
           description: The request has succeeded.
@@ -258,7 +257,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '404':
           description: Sensor not found.
           content:
@@ -268,7 +267,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Sensor Not Found
+                    example: "Sensor Not Found"
         '500':
           description: Internal server error.
           content:
@@ -278,7 +277,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     put:
       tags:
@@ -308,7 +307,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -318,7 +317,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
     delete:
       tags:
@@ -332,7 +331,7 @@ paths:
           schema:
             type: string
           required: true
-          example: 02:00:00:00:00:01
+          example: "02:00:00:00:00:01"
       responses:
         '200':
           description: Sensor deleted.
@@ -349,7 +348,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '500':
           description: Internal server error.
           content:
@@ -359,7 +358,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
   /place/sensor:
     get:
@@ -374,7 +373,7 @@ paths:
           schema:
             type: string
           required: true
-          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+          example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"
       responses:
         '200':
           description: The request has succeeded.
@@ -394,7 +393,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Malformed Request
+                    example: "Malformed Request"
         '404':
           description: Place not found.
           content:
@@ -404,7 +403,7 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Place Not Found
+                    example: "Place Not Found"
         '500':
           description: Internal server error.
           content:
@@ -414,10 +413,9 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal Server Error
+                    example: "Internal Server Error"
 
 components:
-
   schemas:
     Coordinates:
       type: object
@@ -439,15 +437,15 @@ components:
         id:
           type: string
           description: The id of the place of interest
-          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+          example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"
         type:
           type: string
           description: The type of place
-          example: temperature
+          example: "city"
         name:
           type: string
           description: The name of the place of interest
-          example: Trento
+          example: "Trento"
         coordinates:
           type: object
           description: The coordinates of the place of interest
@@ -461,12 +459,12 @@ components:
         id:
           type: string
           description: The id of the sensor
-          example: 02:00:00:00:00:01
+          example: "02:00:00:00:00:01"
         type:
           type: string
           description: The type of data that the sensor collects
-          example: temperature
+          example: "temperature"
         place_id:
           type: string
           description: The id of the place where is the sensor
-          example: 3d0d2bcf-160c-4b0b-a273-d7d09c828bb8
+          example: "3d0d2bcf-160c-4b0b-a273-d7d09c828bb8"

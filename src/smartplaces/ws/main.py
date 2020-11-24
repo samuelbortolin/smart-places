@@ -3,6 +3,8 @@ from __future__ import absolute_import, annotations
 import argparse
 import os
 
+from smartplaces.daos.collector import DaoCollector
+from smartplaces.db.handler import MemoryHandler
 from smartplaces.ws.ws import WebService
 
 
@@ -14,7 +16,10 @@ if __name__ == "__main__":
 
     args = argParser.parse_args()
 
-    ws = WebService(args.host, args.port)
+    mem_handler = MemoryHandler()
+    dao_collector = DaoCollector.build(mem_handler)
+
+    ws = WebService(args.host, args.port, dao_collector)
 
     try:
         ws.run()

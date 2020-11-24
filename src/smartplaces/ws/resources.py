@@ -3,18 +3,19 @@ from __future__ import absolute_import, annotations
 from flask import request
 from flask_restful import Resource
 
-from smartplaces.common.models.place import Place
-from smartplaces.common.models.sensor import Sensor
+from smartplaces.daos.collector import DaoCollector
+from smartplaces.models.place import Place
+from smartplaces.models.sensor import Sensor
 
 
 class ResourcesBuilder:
 
     @staticmethod
-    def routes():
+    def routes(dao_collector: DaoCollector):
         return [
-            (PlaceResource, '/place', ()),
-            (SensorResource, '/sensor', ()),
-            (SensorsInPlaceResource, '/place/sensor', ())
+            (PlaceResource, '/place', (dao_collector,)),
+            (SensorResource, '/sensor', (dao_collector,)),
+            (SensorsInPlaceResource, '/place/sensor', (dao_collector,))
         ]
 
 
@@ -24,6 +25,9 @@ class PlaceResource(Resource):
     """
 
     PLACE_ID_KEY = "place_id"
+
+    def __init__(self, dao_collector: DaoCollector):
+        self._dao_collector = dao_collector
 
     def get(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
@@ -68,6 +72,9 @@ class SensorResource(Resource):
     """
     The Resource for the management of sensors
     """
+
+    def __init__(self, dao_collector: DaoCollector):
+        self._dao_collector = dao_collector
 
     SENSOR_ID_KEY = "sensor_id"
 
@@ -114,6 +121,9 @@ class SensorsInPlaceResource(Resource):
     """
     The Resource for the getting the sensors present in a place
     """
+
+    def __init__(self, dao_collector: DaoCollector):
+        self._dao_collector = dao_collector
 
     PLACE_ID_KEY = "place_id"
 
