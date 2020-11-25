@@ -363,8 +363,8 @@ paths:
   /place/sensor:
     get:
       tags:
-        - "Place/Sensor"
-      summary: Get Sensors In Place
+        - "Place Sensors"
+      summary: Get Place Sensors
       description: Get the sensors present in the place with place_id equal to the one requested.
       parameters:
         - in: query

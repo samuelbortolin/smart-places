@@ -18,7 +18,7 @@ class ResourcesBuilder:
         return [
             (PlaceResource, '/place', (dao_collector,)),
             (SensorResource, '/sensor', (dao_collector,)),
-            (SensorsInPlaceResource, '/place/sensor', (dao_collector,))
+            (PlaceSensorsResource, '/place/sensor', (dao_collector,))
         ]
 
 
@@ -32,13 +32,6 @@ class PlaceResource(Resource):
     def __init__(self, dao_collector: DaoCollector):
         self._dao_collector = dao_collector
 
-    def get(self):
-        place_id: str = request.args.get(self.PLACE_ID_KEY)
-        if not place_id:
-            return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
-
-        # return the place with the place_id equal to the one requested or 404 place not found
-
     def post(self):
         posted_data = request.get_json()
         if posted_data is None:
@@ -50,6 +43,13 @@ class PlaceResource(Resource):
             return {"message": "Malformed request: could not parse posted data"}, 400
 
         # create a new place
+
+    def get(self):
+        place_id: str = request.args.get(self.PLACE_ID_KEY)
+        if not place_id:
+            return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
+
+        # return the place with the place_id equal to the one requested or 404 place not found
 
     def put(self):
         posted_data = request.get_json()
@@ -81,13 +81,6 @@ class SensorResource(Resource):
 
     SENSOR_ID_KEY = "sensor_id"
 
-    def get(self):
-        sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
-        if not sensor_id:
-            return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
-
-        # return the sensor with the sensor_id equal to the one requested or 404 sensor not found
-
     def post(self):
         posted_data = request.get_json()
         if posted_data is None:
@@ -99,6 +92,13 @@ class SensorResource(Resource):
             return {"message": "Malformed request: could not parse posted data"}, 400
 
         # create a new sensor
+
+    def get(self):
+        sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
+        if not sensor_id:
+            return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
+
+        # return the sensor with the sensor_id equal to the one requested or 404 sensor not found
 
     def put(self):
         posted_data = request.get_json()
@@ -120,7 +120,7 @@ class SensorResource(Resource):
         # delete the sensor with the sensor_id equal to the one requested
 
 
-class SensorsInPlaceResource(Resource):
+class PlaceSensorsResource(Resource):
     """
     The Resource for the getting the sensors present in a place
     """

@@ -59,7 +59,7 @@ class SensorDao(SmartPlacesDao):
     def delete(self, sensor_id: str) -> None:
         self._db_handler.delete(sensor_id, self.INDEX)
 
-    def search_sensors_in_place(self, place_id: str) -> List[Sensor]:
+    def search_place_sensors(self, place_id: str) -> List[Sensor]:
         sensors_repr: List[dict] = self._db_handler.search(Sensor.PLACE_ID_KEY, place_id, self.INDEX)
         sensors = [Sensor.from_repr(sensor_repr) for sensor_repr in sensors_repr]
         return sensors
