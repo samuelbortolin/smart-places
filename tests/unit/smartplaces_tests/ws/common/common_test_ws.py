@@ -3,10 +3,13 @@ from __future__ import absolute_import, annotations
 from unittest import TestCase
 
 from smartplaces.ws.ws import WebService
-from tests.unit.smartplaces_tests.common.mocks.daos import MockDaoBuilder
+from tests.unit.smartplaces_tests.ws.common.mocks.daos import MockDaoBuilder
 
 
 class CommonWsTestCase(TestCase):
+    """
+    A common test case for the smart-places web service resources
+    """
 
     def setUp(self) -> None:
         super().setUp()

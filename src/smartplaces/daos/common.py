@@ -1,15 +1,17 @@
 from __future__ import absolute_import, annotations
 
-from smartplaces.db.handler import DbHandler
+import abc
+
+from smartplaces.db_handlers.common import DbHandler
 
 
 class DaoEntryNotFound(Exception):
     pass
 
 
-class SmartPlacesDao:
+class SmartPlacesDao(abc.ABC):
     """
-    A base dao for storing the smart-places data
+    A basic dao for the management of smart-places data
     """
 
     def __init__(self, db_handler: DbHandler, index: str) -> None:

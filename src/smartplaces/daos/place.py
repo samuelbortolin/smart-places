@@ -3,13 +3,13 @@ from __future__ import absolute_import, annotations
 from typing import Optional
 
 from smartplaces.daos.common import SmartPlacesDao, DaoEntryNotFound
-from smartplaces.db.handler import DbHandler
+from smartplaces.db_handlers.common import DbHandler
 from smartplaces.models.place import Place
 
 
 class PlaceDao(SmartPlacesDao):
     """
-    A base dao for storing the places data
+    A dao for the management of places data
     """
 
     INDEX = "smart-places_place"

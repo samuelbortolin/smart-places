@@ -6,6 +6,9 @@ from smartplaces.daos.sensor import SensorDao
 
 
 class MockPlaceDao(PlaceDao):
+    """
+    A mock for the places dao
+    """
 
     def __init__(self):
         super().__init__(None)
@@ -15,6 +18,9 @@ class MockPlaceDao(PlaceDao):
 
 
 class MockSensorDao(SensorDao):
+    """
+    A mock for the sensor dao
+    """
 
     def __init__(self):
         super().__init__(None)
@@ -24,6 +30,9 @@ class MockSensorDao(SensorDao):
 
 
 class MockDaoBuilder:
+    """
+    The class for building the smart-places dao mocks
+    """
 
     @staticmethod
     def build() -> DaoCollector:

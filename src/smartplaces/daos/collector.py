@@ -2,7 +2,7 @@ from __future__ import absolute_import, annotations
 
 from smartplaces.daos.place import PlaceDao
 from smartplaces.daos.sensor import SensorDao
-from smartplaces.db.handler import DbHandler
+from smartplaces.db_handlers.common import DbHandler
 
 
 class DaoCollector:

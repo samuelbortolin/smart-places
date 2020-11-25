@@ -4,7 +4,7 @@ import argparse
 import os
 
 from smartplaces.daos.collector import DaoCollector
-from smartplaces.db.handler import MemoryHandler
+from smartplaces.db_handlers.memory import MemoryHandler
 from smartplaces.ws.ws import WebService
 
 

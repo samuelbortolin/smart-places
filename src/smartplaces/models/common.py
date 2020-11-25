@@ -6,8 +6,8 @@ from typing import Optional, Any
 
 class BaseClass(abc.ABC):
     """
-    The base class model, every object must have an unique identifier that in the representation
-    has to be the value related to the key `ID_KEY`
+    the basic model of smart-places classes, every object must have an unique identifier
+    that in the representation has to be the value related to the key `ID_KEY`
     """
 
     ID_KEY = "id"

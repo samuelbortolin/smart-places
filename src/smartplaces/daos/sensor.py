@@ -3,13 +3,13 @@ from __future__ import absolute_import, annotations
 from typing import List, Optional
 
 from smartplaces.daos.common import SmartPlacesDao, DaoEntryNotFound
-from smartplaces.db.handler import DbHandler
+from smartplaces.db_handlers.common import DbHandler
 from smartplaces.models.sensor import Sensor
 
 
 class SensorDao(SmartPlacesDao):
     """
-    A base dao for storing the sensors data
+    A dao for the management of the sensors data
     """
 
     INDEX = "smart-places_sensor"

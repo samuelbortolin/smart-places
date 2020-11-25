@@ -3,7 +3,7 @@ from __future__ import absolute_import, annotations
 import uuid
 from typing import Optional, Any
 
-from smartplaces.models.base_class import BaseClass
+from smartplaces.models.common import BaseClass
 from smartplaces.models.coordinates import Coordinates
 
 
