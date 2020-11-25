@@ -19,7 +19,7 @@ class TestSensor(TestCase):
 
     def test_update(self):
         sensor = Sensor("id", "type", "place_id")
-        sensor_updated = Sensor("id", "type", "place_id_2")
+        sensor_updated = Sensor("id", "type2", "place_id_2")
         self.assertEqual(sensor_updated, sensor.update(sensor_updated))
 
     def test_get_id(self):

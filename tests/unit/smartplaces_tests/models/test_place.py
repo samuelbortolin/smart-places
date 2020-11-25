@@ -24,7 +24,7 @@ class TestPlace(TestCase):
 
     def test_update(self):
         place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
-        place_updated = Place("id", "type2", "name2", Coordinates(46.0748, 11.1217))
+        place_updated = Place("id", "type2", "name2", Coordinates(46.0750, 11.1220))
         self.assertEqual(place_updated, place.update(place_updated))
 
     def test_get_id(self):

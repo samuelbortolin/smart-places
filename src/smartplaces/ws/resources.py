@@ -9,6 +9,9 @@ from smartplaces.models.sensor import Sensor
 
 
 class ResourcesBuilder:
+    """
+    The class for building the resources of the web service
+    """
 
     @staticmethod
     def routes(dao_collector: DaoCollector):

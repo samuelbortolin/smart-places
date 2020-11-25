@@ -3,58 +3,58 @@ from __future__ import absolute_import, annotations
 import uuid
 from typing import Optional, Any
 
-from smartplaces.models.base_object import BaseObject
+from smartplaces.models.base_class import BaseClass
 from smartplaces.models.coordinates import Coordinates
 
 
-class Place(BaseObject):
+class Place(BaseClass):
     """
     The model of a place of interest
     """
 
-    ID_KEY = "id"
     TYPE_KEY = "type"
     NAME_KEY = "name"
     COORDINATES_KEY = "coordinates"
 
     def __init__(self, place_id: str, place_type: str, place_name: str, place_coordinates: Coordinates) -> None:
         """
-        :param place_id: The id of the place of interest
-        :param place_type: The type of place
-        :param place_name: The name of the place of interest
-        :param place_coordinates: The coordinates of the place of interest
+        :param place_id: the id of the place of interest
+        :param place_type: the type of place
+        :param place_name: the name of the place of interest
+        :param place_coordinates: the coordinates of the place of interest
         """
 
-        self.place_id: str = place_id
-        self.place_type: str = place_type
-        self.place_name: str = place_name
-        self.place_coordinates: Coordinates = place_coordinates
+        self._place_id: str = place_id
+        self._place_type: str = place_type
+        self._place_name: str = place_name
+        self._place_coordinates: Coordinates = place_coordinates
 
     def update(self, o: Place) -> Place:
-        self.place_type = o.place_type
-        self.place_name = o.place_name
+        self._place_type = o._place_type
+        self._place_name = o._place_name
+        self._place_coordinates = o._place_coordinates
         return self
 
     def get_id(self) -> str:
-        return self.place_id
+        return self._place_id
 
     def get_field(self, field_key: str) -> Optional[Any]:
         if field_key == self.ID_KEY:
             return self.get_id()
         if field_key == self.TYPE_KEY:
-            return self.place_type
+            return self._place_type
         if field_key == self.NAME_KEY:
-            return self.place_name
+            return self._place_name
         if field_key == self.COORDINATES_KEY:
-            return self.place_coordinates
+            return self._place_coordinates
         return None
 
     def to_repr(self) -> dict:
         return {
-            self.ID_KEY: self.place_id,
-            self.TYPE_KEY: self.place_type,
-            self.NAME_KEY: self.place_name,
-            self.COORDINATES_KEY: self.place_coordinates.to_repr()
+            self.ID_KEY: self._place_id,
+            self.TYPE_KEY: self._place_type,
+            self.NAME_KEY: self._place_name,
+            self.COORDINATES_KEY: self._place_coordinates.to_repr()
         }
 
     @staticmethod
@@ -66,5 +66,5 @@ class Place(BaseObject):
         )
 
     def __eq__(self, o: Place) -> bool:
-        return self.place_id == o.place_id and self.place_type == o.place_type and self.place_name == o.place_name \
-               and self.place_coordinates == o.place_coordinates
+        return self._place_id == o._place_id and self._place_type == o._place_type and \
+               self._place_name == o._place_name and self._place_coordinates == o._place_coordinates
