@@ -1,5 +1,7 @@
 from __future__ import absolute_import, annotations
 
+from typing import List
+
 from flask import request
 from flask_restful import Resource
 
@@ -174,7 +176,8 @@ class PlaceSensorsResource(Resource):
 
         try:
             self._dao_collector.place_dao.get_place(place_id)
-            return self._dao_collector.sensor_dao.search_place_sensors(place_id)
+            sensors: List[Sensor] = self._dao_collector.sensor_dao.search_place_sensors(place_id)
+            return [sensor.to_repr() for sensor in sensors]
         except DaoEntryNotFound:
             return {"message": f"Place with id {place_id} not found"}, 404
         except Exception:

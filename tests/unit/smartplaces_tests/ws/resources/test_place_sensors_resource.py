@@ -8,7 +8,7 @@ from tests.unit.smartplaces_tests.ws.common.common_test_ws import CommonWsTestCa
 
 class TestPlaceSensorsResource(CommonWsTestCase):
 
-    def test_get_sensor(self):
+    def test_get_place_sensors(self):
         place = Place.from_repr({
             Place.ID_KEY: "id",
             Place.TYPE_KEY: "type",
