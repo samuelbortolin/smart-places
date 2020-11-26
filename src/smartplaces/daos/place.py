@@ -1,60 +1,105 @@
 from __future__ import absolute_import, annotations
 
-from typing import Optional
+import abc
 
-from smartplaces.daos.common import SmartPlacesDao, DaoEntryNotFound
-from smartplaces.db_handlers.common import DbHandler
+from smartplaces.daos.common import DaoEntryNotFound
 from smartplaces.models.place import Place
 
 
-class PlaceDao(SmartPlacesDao):
+class PlaceDao(abc.ABC):
     """
-    A dao for the management of places data
+    A basic dao for the management of places
     """
 
-    INDEX = "smart-places_place"
-
-    def __init__(self, db_handler: DbHandler):
+    @abc.abstractmethod
+    def save_place(self, place: Place) -> None:
         """
-        :param db_handler: an handler for the database
-        """
-
-        super().__init__(db_handler, self.INDEX)
-
-    def add(self, place: Place) -> None:
-        """
-        Store a place
-        :param place: the place to store
+        Save a place
+        :param place: the place to save
         """
 
-        self._db_handler.add(place.get_id(), place.to_repr(), self.INDEX)
+        pass
 
-    def get(self, place_id: str) -> Place:
+    @abc.abstractmethod
+    def get_place(self, place_id: str) -> Place:
         """
         Get a place from an id
-        :param place_id: the id identifying the place
+        :param place_id: the identifier of the place
         :return: the place with the requested id
         :exception DaoEntryNotFound: raised if the place with the requested id is not found
         """
 
-        place_repr: Optional[dict] = self._db_handler.get(place_id, self.INDEX)
-        if place_repr:
-            return Place.from_repr(place_repr)
-        else:
+        pass
+
+    @abc.abstractmethod
+    def update_place(self, place: Place) -> None:
+        """
+        Update a place if present, if not create one
+        :param place: the place to update
+        """
+
+        pass
+
+    @abc.abstractmethod
+    def delete_place(self, place_id: str) -> None:
+        """
+        Delete a place from an id
+        :param place_id: the identifier of the place
+        """
+
+        pass
+
+
+class PlaceMemoryDao(PlaceDao):
+    """
+    A dao for the management of places in the memory
+    """
+
+    def __init__(self):
+        """
+        Initialize an empty dictionary
+        """
+
+        self._places = {}
+
+    def save_place(self, place: Place) -> None:
+        """
+        Save a place
+        :param place: the place to save
+        """
+
+        self._places[place.get_id()] = place
+
+    def get_place(self, place_id: str) -> Place:
+        """
+        Get a place from an id
+        :param place_id: the identifier of the place
+        :return: the place with the requested id
+        :exception DaoEntryNotFound: raised if the place with the requested id is not found
+        """
+
+        try:
+            return self._places[place_id]
+        except KeyError:
             raise DaoEntryNotFound("Place not found for id [%s]" % place_id)
 
-    def put(self, place: Place) -> None:
+    def update_place(self, place: Place) -> None:
         """
         Update a place if present, if not create one
         :param place: the place to update
         """
 
         try:
-            place_to_update = self.get(place.get_id())
+            place_to_update = self.get_place(place.get_id())
             place_to_update.update(place)
         except DaoEntryNotFound:
             place_to_update = place
-        self.add(place_to_update)
+        self.save_place(place_to_update)
 
-    def delete(self, place_id: str) -> None:
-        self._db_handler.delete(place_id, self.INDEX)
+    def delete_place(self, place_id: str) -> None:
+        """
+        Delete a place from an id
+        :param place_id: the identifier of the place
+        """
+
+        self._places.pop(place_id, None)

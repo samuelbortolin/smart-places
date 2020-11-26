@@ -31,9 +31,14 @@ class TestPlace(TestCase):
         place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
         self.assertEqual("id", place.get_id())
 
-    def test_get_field(self):
+    def test_get_type(self):
         place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
-        self.assertEqual("id", place.get_field(Place.ID_KEY))
-        self.assertEqual("type", place.get_field(Place.TYPE_KEY))
-        self.assertEqual("name", place.get_field(Place.NAME_KEY))
-        self.assertEqual(Coordinates(46.0748, 11.1217), place.get_field(Place.COORDINATES_KEY))
+        self.assertEqual("type", place.get_type())
+
+    def test_get_name(self):
+        place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
+        self.assertEqual("name", place.get_name())
+
+    def test_get_coordinates(self):
+        place = Place("id", "type", "name", Coordinates(46.0748, 11.1217))
+        self.assertEqual(Coordinates(46.0748, 11.1217), place.get_coordinates())

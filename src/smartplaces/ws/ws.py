@@ -16,7 +16,7 @@ class WebService:
         """
         :param host: the host of the web service
         :param port: the port of the web service
-        :param dao_collector: the collector of daos for storing data
+        :param dao_collector: the collector of daos for the management of data
         """
 
         self._host = host

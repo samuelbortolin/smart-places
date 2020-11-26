@@ -1,16 +1,14 @@
 from __future__ import absolute_import, annotations
 
 import uuid
-from typing import Optional, Any
-
-from smartplaces.models.common import BaseClass
 
 
-class Sensor(BaseClass):
+class Sensor:
     """
     The model of a sensor that collects a certain type of data and is in one place
     """
 
+    ID_KEY = "id"
     TYPE_KEY = "type"
     PLACE_ID_KEY = "place_id"
 
@@ -25,22 +23,19 @@ class Sensor(BaseClass):
         self._sensor_type: str = sensor_type
         self._place_id: str = place_id
 
-    def update(self, o: Sensor) -> Sensor:
-        self._sensor_type = o._sensor_type
-        self._place_id = o._place_id
+    def update(self, sensor: Sensor) -> Sensor:
+        self._sensor_type = sensor._sensor_type
+        self._place_id = sensor._place_id
         return self
 
     def get_id(self) -> str:
         return self._sensor_id
 
-    def get_field(self, field_key: str) -> Optional[Any]:
-        if field_key == self.ID_KEY:
-            return self.get_id()
-        if field_key == self.TYPE_KEY:
-            return self._sensor_type
-        if field_key == self.PLACE_ID_KEY:
-            return self._place_id
-        return None
+    def get_type(self) -> str:
+        return self._sensor_type
+
+    def get_place_id(self) -> str:
+        return self._place_id
 
     def to_repr(self) -> dict:
         return {
@@ -57,5 +52,6 @@ class Sensor(BaseClass):
             raw_sensor[Sensor.PLACE_ID_KEY]
         )
 
-    def __eq__(self, o: Sensor) -> bool:
-        return self._sensor_id == o._sensor_id and self._sensor_type == o._sensor_type and self._place_id == o._place_id
+    def __eq__(self, sensor: Sensor) -> bool:
+        return self._sensor_id == sensor._sensor_id and self._sensor_type == sensor._sensor_type and \
+               self._place_id == sensor._place_id

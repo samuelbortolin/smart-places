@@ -26,8 +26,10 @@ class TestSensor(TestCase):
         sensor = Sensor("id", "type", "place_id")
         self.assertEqual("id", sensor.get_id())
 
-    def test_get_field(self):
+    def test_get_type(self):
         sensor = Sensor("id", "type", "place_id")
-        self.assertEqual("id", sensor.get_field(Sensor.ID_KEY))
-        self.assertEqual("type", sensor.get_field(Sensor.TYPE_KEY))
-        self.assertEqual("place_id", sensor.get_field(Sensor.PLACE_ID_KEY))
+        self.assertEqual("type", sensor.get_type())
+
+    def test_get_place_id(self):
+        sensor = Sensor("id", "type", "place_id")
+        self.assertEqual("place_id", sensor.get_place_id())

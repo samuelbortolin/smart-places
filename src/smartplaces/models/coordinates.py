@@ -17,14 +17,14 @@ class Coordinates:
         :param lon: the longitude of the place
         """
 
-        self.lat: float = lat
-        self.lon: float = lon
+        self._lat: float = lat
+        self._lon: float = lon
 
     @property
     def value(self) -> Dict[str: float, str: float]:
         return {
-            self.LAT_KEY: self.lat,
-            self.LON_KEY: self.lon
+            self.LAT_KEY: self._lat,
+            self.LON_KEY: self._lon
         }
 
     def to_repr(self) -> Dict[str: float, str: float]:
@@ -34,5 +34,5 @@ class Coordinates:
     def from_repr(raw_coordinates: dict) -> Coordinates:
         return Coordinates(raw_coordinates[Coordinates.LAT_KEY], raw_coordinates[Coordinates.LON_KEY])
 
-    def __eq__(self, o: Coordinates) -> bool:
-        return self.lat == o.lat and self.lon == o.lon and self.value == o.value
+    def __eq__(self, coordinates: Coordinates) -> bool:
+        return self._lat == coordinates._lat and self._lon == coordinates._lon and self.value == coordinates.value

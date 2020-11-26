@@ -1,17 +1,16 @@
 from __future__ import absolute_import, annotations
 
 import uuid
-from typing import Optional, Any
 
-from smartplaces.models.common import BaseClass
 from smartplaces.models.coordinates import Coordinates
 
 
-class Place(BaseClass):
+class Place:
     """
     The model of a place of interest
     """
 
+    ID_KEY = "id"
     TYPE_KEY = "type"
     NAME_KEY = "name"
     COORDINATES_KEY = "coordinates"
@@ -29,25 +28,23 @@ class Place(BaseClass):
         self._place_name: str = place_name
         self._place_coordinates: Coordinates = place_coordinates
 
-    def update(self, o: Place) -> Place:
-        self._place_type = o._place_type
-        self._place_name = o._place_name
-        self._place_coordinates = o._place_coordinates
+    def update(self, place: Place) -> Place:
+        self._place_type = place._place_type
+        self._place_name = place._place_name
+        self._place_coordinates = place._place_coordinates
         return self
 
     def get_id(self) -> str:
         return self._place_id
 
-    def get_field(self, field_key: str) -> Optional[Any]:
-        if field_key == self.ID_KEY:
-            return self.get_id()
-        if field_key == self.TYPE_KEY:
-            return self._place_type
-        if field_key == self.NAME_KEY:
-            return self._place_name
-        if field_key == self.COORDINATES_KEY:
-            return self._place_coordinates
-        return None
+    def get_type(self) -> str:
+        return self._place_type
+
+    def get_name(self) -> str:
+        return self._place_name
+
+    def get_coordinates(self) -> Coordinates:
+        return self._place_coordinates
 
     def to_repr(self) -> dict:
         return {
@@ -65,6 +62,6 @@ class Place(BaseClass):
             Coordinates.from_repr(raw_place[Place.COORDINATES_KEY])
         )
 
-    def __eq__(self, o: Place) -> bool:
-        return self._place_id == o._place_id and self._place_type == o._place_type and \
-               self._place_name == o._place_name and self._place_coordinates == o._place_coordinates
+    def __eq__(self, place: Place) -> bool:
+        return self._place_id == place._place_id and self._place_type == place._place_type and \
+               self._place_name == place._place_name and self._place_coordinates == place._place_coordinates
