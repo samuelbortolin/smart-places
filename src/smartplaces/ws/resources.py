@@ -4,6 +4,7 @@ from flask import request
 from flask_restful import Resource
 
 from smartplaces.daos.collector import DaoCollector
+from smartplaces.daos.common import DaoEntryNotFound
 from smartplaces.models.place import Place
 from smartplaces.models.sensor import Sensor
 
@@ -42,14 +43,24 @@ class PlaceResource(Resource):
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # create a new place
+        try:
+            self._dao_collector.place_dao.save_place(place)
+            return {"id": place.get_id()}, 201
+        except Exception:
+            return {"message": "Internal server error: could not save the place"}, 500
 
     def get(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
         if not place_id:
             return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
 
-        # return the place with the place_id equal to the one requested or 404 place not found
+        try:
+            place: Place = self._dao_collector.place_dao.get_place(place_id)
+            return place.to_repr()
+        except DaoEntryNotFound:
+            return {"message": f"Place with id {place_id} not found"}, 404
+        except Exception:
+            return {"message": "Internal server error: could not get the place"}, 500
 
     def put(self):
         posted_data = request.get_json()
@@ -61,14 +72,22 @@ class PlaceResource(Resource):
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # update a place
+        try:
+            self._dao_collector.place_dao.update_place(place)
+            return {}
+        except Exception:
+            return {"message": "Internal server error: could not update the place"}, 500
 
     def delete(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
         if not place_id:
             return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
 
-        # delete the place with the place_id equal to the one requested
+        try:
+            self._dao_collector.place_dao.delete_place(place_id)
+            return {}
+        except Exception:
+            return {"message": "Internal server error: could not delete the place"}, 500
 
 
 class SensorResource(Resource):
@@ -91,14 +110,24 @@ class SensorResource(Resource):
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # create a new sensor
+        try:
+            self._dao_collector.sensor_dao.save_sensor(sensor)
+            return {"id": sensor.get_id()}, 201
+        except Exception:
+            return {"message": "Internal server error: could not save the sensor"}, 500
 
     def get(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
         if not sensor_id:
             return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
 
-        # return the sensor with the sensor_id equal to the one requested or 404 sensor not found
+        try:
+            sensor: Sensor = self._dao_collector.sensor_dao.get_sensor(sensor_id)
+            return sensor.to_repr()
+        except DaoEntryNotFound:
+            return {"message": f"Place with id {sensor_id} not found"}, 404
+        except Exception:
+            return {"message": "Internal server error: could not get the sensor"}, 500
 
     def put(self):
         posted_data = request.get_json()
@@ -110,14 +139,22 @@ class SensorResource(Resource):
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
 
-        # update a sensor
+        try:
+            self._dao_collector.sensor_dao.update_sensor(sensor)
+            return {}
+        except Exception:
+            return {"message": "Internal server error: could not update the sensor"}, 500
 
     def delete(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
         if not sensor_id:
             return {"message": f"Malformed request: missing required {self.SENSOR_ID_KEY} parameter"}, 400
 
-        # delete the sensor with the sensor_id equal to the one requested
+        try:
+            self._dao_collector.sensor_dao.delete_sensor(sensor_id)
+            return {}
+        except Exception:
+            return {"message": "Internal server error: could not delete the sensor"}, 500
 
 
 class PlaceSensorsResource(Resource):
@@ -135,4 +172,10 @@ class PlaceSensorsResource(Resource):
         if not place_id:
             return {"message": f"Malformed request: missing required {self.PLACE_ID_KEY} parameter"}, 400
 
-        # return the sensors in the place with the place_id equal to the one requested or 404 place not found
+        try:
+            self._dao_collector.place_dao.get_place(place_id)
+            return self._dao_collector.sensor_dao.search_place_sensors(place_id)
+        except DaoEntryNotFound:
+            return {"message": f"Place with id {place_id} not found"}, 404
+        except Exception:
+            return {"message": "Internal server error: could not get the place sensors"}, 500
