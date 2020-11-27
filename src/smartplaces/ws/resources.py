@@ -47,9 +47,10 @@ class PlaceResource(Resource):
 
         try:
             self._dao_collector.place_dao.save_place(place)
-            return {"id": place.get_id()}, 201
         except Exception:
             return {"message": "Internal server error: could not save the place"}, 500
+
+        return {"id": place.get_id()}, 201
 
     def get(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
@@ -58,11 +59,12 @@ class PlaceResource(Resource):
 
         try:
             place: Place = self._dao_collector.place_dao.get_place(place_id)
-            return place.to_repr()
         except DaoEntryNotFound:
             return {"message": f"Place with id {place_id} not found"}, 404
         except Exception:
             return {"message": "Internal server error: could not get the place"}, 500
+
+        return place.to_repr()
 
     def put(self):
         posted_data = request.get_json()
@@ -76,9 +78,10 @@ class PlaceResource(Resource):
 
         try:
             self._dao_collector.place_dao.update_place(place)
-            return {}
         except Exception:
             return {"message": "Internal server error: could not update the place"}, 500
+
+        return {}
 
     def delete(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)
@@ -87,9 +90,10 @@ class PlaceResource(Resource):
 
         try:
             self._dao_collector.place_dao.delete_place(place_id)
-            return {}
         except Exception:
             return {"message": "Internal server error: could not delete the place"}, 500
+
+        return {}
 
 
 class SensorResource(Resource):
@@ -114,9 +118,10 @@ class SensorResource(Resource):
 
         try:
             self._dao_collector.sensor_dao.save_sensor(sensor)
-            return {"id": sensor.get_id()}, 201
         except Exception:
             return {"message": "Internal server error: could not save the sensor"}, 500
+
+        return {"id": sensor.get_id()}, 201
 
     def get(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
@@ -125,11 +130,12 @@ class SensorResource(Resource):
 
         try:
             sensor: Sensor = self._dao_collector.sensor_dao.get_sensor(sensor_id)
-            return sensor.to_repr()
         except DaoEntryNotFound:
             return {"message": f"Place with id {sensor_id} not found"}, 404
         except Exception:
             return {"message": "Internal server error: could not get the sensor"}, 500
+
+        return sensor.to_repr()
 
     def put(self):
         posted_data = request.get_json()
@@ -143,9 +149,10 @@ class SensorResource(Resource):
 
         try:
             self._dao_collector.sensor_dao.update_sensor(sensor)
-            return {}
         except Exception:
             return {"message": "Internal server error: could not update the sensor"}, 500
+
+        return {}
 
     def delete(self):
         sensor_id: str = request.args.get(self.SENSOR_ID_KEY)
@@ -154,9 +161,10 @@ class SensorResource(Resource):
 
         try:
             self._dao_collector.sensor_dao.delete_sensor(sensor_id)
-            return {}
         except Exception:
             return {"message": "Internal server error: could not delete the sensor"}, 500
+
+        return {}
 
 
 class PlaceSensorsResource(Resource):
@@ -177,8 +185,9 @@ class PlaceSensorsResource(Resource):
         try:
             self._dao_collector.place_dao.get_place(place_id)
             sensors: List[Sensor] = self._dao_collector.sensor_dao.search_place_sensors(place_id)
-            return [sensor.to_repr() for sensor in sensors]
         except DaoEntryNotFound:
             return {"message": f"Place with id {place_id} not found"}, 404
         except Exception:
             return {"message": "Internal server error: could not get the place sensors"}, 500
+
+        return [sensor.to_repr() for sensor in sensors]
