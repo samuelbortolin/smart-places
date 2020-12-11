@@ -44,7 +44,7 @@ class SensorDao(abc.ABC):
     @abc.abstractmethod
     def delete_sensor(self, sensor_id: str) -> None:
         """
-        Delete a sensor from an id
+        Delete a sensor from an id if present
         :param sensor_id: the identifier of the sensor
         """
 
@@ -108,7 +108,7 @@ class SensorMemoryDao(SensorDao):
 
     def delete_sensor(self, sensor_id: str) -> None:
         """
-        Delete a sensor from an id
+        Delete a sensor from an id if present
         :param sensor_id: the identifier of the sensor
         """
 

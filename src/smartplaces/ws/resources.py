@@ -19,9 +19,9 @@ class ResourcesBuilder:
     @staticmethod
     def routes(dao_collector: DaoCollector):
         return [
-            (PlaceResource, '/place', (dao_collector,)),
-            (SensorResource, '/sensor', (dao_collector,)),
-            (PlaceSensorsResource, '/place/sensor', (dao_collector,))
+            (PlaceResource, "/place", (dao_collector,)),
+            (SensorResource, "/sensor", (dao_collector,)),
+            (PlaceSensorsResource, "/place/sensor", (dao_collector,))
         ]
 
 
@@ -44,6 +44,8 @@ class PlaceResource(Resource):
             place: Place = Place.from_repr(posted_data)
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
+        except Exception:
+            return {"message": "Internal server error: could not parse posted data"}, 500
 
         try:
             self._dao_collector.place_dao.save_place(place)
@@ -75,6 +77,8 @@ class PlaceResource(Resource):
             place: Place = Place.from_repr(posted_data)
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
+        except Exception:
+            return {"message": "Internal server error: could not parse posted data"}, 500
 
         try:
             self._dao_collector.place_dao.update_place(place)
@@ -101,10 +105,10 @@ class SensorResource(Resource):
     The Resource for the management of sensors
     """
 
+    SENSOR_ID_KEY = "sensor_id"
+
     def __init__(self, dao_collector: DaoCollector):
         self._dao_collector = dao_collector
-
-    SENSOR_ID_KEY = "sensor_id"
 
     def post(self):
         posted_data = request.get_json()
@@ -115,6 +119,8 @@ class SensorResource(Resource):
             sensor: Sensor = Sensor.from_repr(posted_data)
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
+        except Exception:
+            return {"message": "Internal server error: could not parse posted data"}, 500
 
         try:
             self._dao_collector.sensor_dao.save_sensor(sensor)
@@ -146,6 +152,8 @@ class SensorResource(Resource):
             sensor: Sensor = Sensor.from_repr(posted_data)
         except KeyError:
             return {"message": "Malformed request: could not parse posted data"}, 400
+        except Exception:
+            return {"message": "Internal server error: could not parse posted data"}, 500
 
         try:
             self._dao_collector.sensor_dao.update_sensor(sensor)
@@ -172,10 +180,10 @@ class PlaceSensorsResource(Resource):
     The Resource for the getting the sensors present in a place
     """
 
+    PLACE_ID_KEY = "place_id"
+
     def __init__(self, dao_collector: DaoCollector):
         self._dao_collector = dao_collector
-
-    PLACE_ID_KEY = "place_id"
 
     def get(self):
         place_id: str = request.args.get(self.PLACE_ID_KEY)

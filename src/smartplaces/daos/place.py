@@ -43,7 +43,7 @@ class PlaceDao(abc.ABC):
     @abc.abstractmethod
     def delete_place(self, place_id: str) -> None:
         """
-        Delete a place from an id
+        Delete a place from an id if present
         :param place_id: the identifier of the place
         """
 
@@ -98,7 +98,7 @@ class PlaceMemoryDao(PlaceDao):
 
     def delete_place(self, place_id: str) -> None:
         """
-        Delete a place from an id
+        Delete a place from an id if present
         :param place_id: the identifier of the place
         """
 
